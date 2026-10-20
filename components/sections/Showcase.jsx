@@ -27,7 +27,7 @@ export default function Showcase() {
         {/* Each row draws only its top border (the Reveal wrapper breaks :first-child), the list closes the bottom */}
         <ul className="border-b border-white/10 lg:pt-24">
           {whyChoose.map(([t, d], i) => (
-            <Reveal key={t} delay={0.05}>
+            <Reveal key={t} delay={0.05} mobileX={i % 2 ? 90 : -90}>
               <li className="group grid grid-cols-[36px_1fr] gap-3 border-t border-white/10 py-5 lg:grid-cols-[56px_1fr] lg:gap-4 lg:py-8">
                 <span className="pt-1 font-serif text-lg italic text-brand-400 transition-transform duration-500 group-hover:-translate-y-1 lg:pt-0 lg:text-2xl">
                   {String(i + 1).padStart(2, "0")}

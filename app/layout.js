@@ -5,12 +5,19 @@ import Cursor from "@/components/Cursor";
 import Preloader from "@/components/Preloader";
 import ScrollProgress from "@/components/ScrollProgress";
 import SocialRail from "@/components/SocialRail";
+import TouchRipple from "@/components/mobile/TouchRipple";
+import ScrollRing from "@/components/mobile/ScrollRing";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const sans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-sans" });
 const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-serif" });
 
 export const metadata = {
-  title: "DevSphere Solutions | Websites, SaaS, Mobile Apps & Admin Dashboards",
+  title: {
+    default: "DevSphere Solutions | Websites, SaaS, Mobile Apps & Admin Dashboards",
+    template: "%s | DevSphere Solutions",
+  },
   description:
     "DevSphere Solutions is a premium software development agency building scalable websites, SaaS platforms, mobile apps, admin dashboards and AI integrations for India, Dubai, Oman & global markets.",
   icons: { icon: "/logo.jpeg" },
@@ -24,8 +31,14 @@ export default function RootLayout({ children }) {
         <ScrollProgress />
         <Cursor />
         <SocialRail />
+        <TouchRipple />
+        <ScrollRing />
         <div className="grain" aria-hidden />
-        <SmoothScroll>{children}</SmoothScroll>
+        <SmoothScroll>
+          <Navbar />
+          <main className="relative overflow-x-clip">{children}</main>
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );

@@ -1,14 +1,27 @@
 "use client";
 import { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SocialIcon from "./SocialIcon";
-import { company, services, projects } from "@/lib/content";
+import { company, services, projects, projectHref } from "@/lib/content";
 
 const cols = [
-  ["Services", services.map((s) => [s.title, "#services"])],
-  ["Projects", projects.map((p) => [p.title, p.url])],
-  ["Company", [["About", "#about"], ["Founders", "#team"], ["Work", "#work"], ["Stack", "#technologies"], ["Process", "#process"], ["Contact", "#contact"]]],
+  ["Services", services.map((s) => [s.title, "/services"])],
+  ["Projects", projects.map((p) => [p.title, projectHref(p)])],
+  [
+    "Company",
+    [
+      ["Home", "/"],
+      ["About", "/about"],
+      ["Founders", "/about#team"],
+      ["Work", "/work"],
+      ["Services", "/services"],
+      ["Stack", "/services#technologies"],
+      ["Process", "/services#process"],
+      ["Contact", "/contact"],
+    ],
+  ],
 ];
 
 const brand = "DevSphere".split("");
@@ -21,9 +34,9 @@ export default function Footer() {
     <footer ref={ref} className="relative overflow-hidden border-t border-white/5 bg-navy/40 pt-20">
       <div className="container-x grid grid-cols-2 gap-x-6 gap-y-10 pb-12 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-12 lg:pb-16">
         <div className="col-span-2 lg:col-span-1">
-          <div className="relative h-14 w-[200px] overflow-hidden rounded-md">
+          <Link href="/" aria-label="DevSphere Solutions home" className="relative block h-14 w-[200px] overflow-hidden rounded-md">
             <Image src="/logo.jpeg" alt="DevSphere Solutions" fill className="object-cover" sizes="200px" />
-          </div>
+          </Link>
           <p className="mt-5 max-w-sm text-slate-400">{company.tagline}</p>
           <div className="mt-5 space-y-1 text-sm text-slate-400">
             <a href={`mailto:${company.email}`} className="block hover:text-brand-300">{company.email}</a>
@@ -53,13 +66,9 @@ export default function Footer() {
             <ul className="mt-5 space-y-2.5">
               {links.map(([l, href]) => (
                 <li key={l}>
-                  <a
-                    href={href}
-                    {...(href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    className="text-sm text-slate-400 transition hover:pl-1 hover:text-brand-300"
-                  >
+                  <Link href={href} className="text-sm text-slate-400 transition hover:pl-1 hover:text-brand-300">
                     {l}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SplitReveal from "@/components/SplitReveal";
+import SwipeDeck from "@/components/mobile/SwipeDeck";
+import useIsMobile from "@/lib/useIsMobile";
 import { testimonials as items } from "@/lib/content";
 
 const initials = (n) => n.replace("Dr. ", "").split(" ").map((w) => w[0]).join("");
@@ -15,18 +17,22 @@ export default function Testimonials() {
     return () => clearInterval(t);
   }, [paused]);
   const it = items[i];
+  const mobile = useIsMobile();
 
   return (
     <section id="testimonials" className="relative overflow-hidden py-20 lg:py-32" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
       <div className="container-x">
         <div className="mb-10 lg:mb-16 flex flex-wrap items-end justify-between gap-6">
           <SplitReveal text="Words from our *partners.*" className="display text-[clamp(3rem,6vw,6rem)]" />
-          <div className="flex items-center gap-3">
+          <div className="hidden items-center gap-3 lg:flex">
             <button onClick={() => setI((i - 1 + items.length) % items.length)} aria-label="Previous" className="flex h-14 w-14 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-brand-400 hover:bg-brand-500">←</button>
             <button onClick={() => setI((i + 1) % items.length)} aria-label="Next" className="flex h-14 w-14 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-brand-400 hover:bg-brand-500">→</button>
           </div>
         </div>
 
+        {mobile ? (
+          <SwipeDeck items={items} index={i} onNext={() => setI((v) => (v + 1) % items.length)} onPick={setI} onInteract={() => setPaused(true)} />
+        ) : (
         <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
           <div className="relative min-h-[340px]">
             <span className="pointer-events-none absolute -left-4 -top-16 font-serif text-[14rem] leading-none text-brand-500/15">&ldquo;</span>
@@ -76,6 +82,7 @@ export default function Testimonials() {
             ))}
           </ul>
         </div>
+        )}
       </div>
     </section>
   );

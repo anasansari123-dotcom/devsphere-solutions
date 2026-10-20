@@ -1,18 +1,21 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SplitReveal from "@/components/SplitReveal";
 import Magnetic from "@/components/Magnetic";
 import SceneBoundary from "@/components/three/SceneBoundary";
 import { markets } from "@/lib/content";
+import introDelay from "@/lib/introDelay";
 
 const HeroScene = dynamic(() => import("@/components/three/HeroScene"), { ssr: false });
 
-const START = 2.1; // after the preloader lifts
 
 export default function Hero() {
   const ref = useRef(null);
+  // Wait for the preloader on first load; start right away when navigating back to Home
+  const [START] = useState(() => introDelay());
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "35%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
@@ -59,15 +62,15 @@ export default function Hero() {
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <Magnetic>
-              <a href="#contact" className="btn-primary">Start a Project →</a>
+              <Link href="/contact" className="btn-primary">Start a Project →</Link>
             </Magnetic>
             <Magnetic>
-              <a href="#work" className="btn-ghost">View Projects</a>
+              <Link href="/work" className="btn-ghost">View Projects</Link>
             </Magnetic>
           </div>
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-400" />
-            <span className="label">15+ projects · 3+ countries ·</span>
+            <span className="label">10+ years · 20+ experts · 15+ projects ·</span>
             {markets.map((m) => (
               <span key={m} className="label text-slate-400">{m}</span>
             ))}

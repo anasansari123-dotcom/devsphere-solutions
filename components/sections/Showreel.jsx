@@ -1,8 +1,11 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useMotionTemplate } from "framer-motion";
-import { projects } from "@/lib/content";
+import Link from "next/link";
+import { projects, projectHref } from "@/lib/content";
 import useIsMobile from "@/lib/useIsMobile";
+
+const MotionLink = motion.create(Link);
 
 const reel = ["Chacha Mobile CRM", "Royal Metro EV", "Marina Muse International", "Digital Career Center", "Fixigo Repair", "Crossline Cricket Stadium", "MPCPCT"];
 
@@ -32,12 +35,13 @@ export default function Showreel() {
     return () => v.removeEventListener("timeupdate", onTime);
   }, [mobile]);
 
-  const url = projects.find((p) => p.title === reel[current])?.url;
+  const playing = projects.find((p) => p.title === reel[current]);
+  const url = playing ? projectHref(playing) : "/work";
 
   // Portrait screens: a plain 16:9 card instead of the pinned full-bleed expansion
   if (mobile) {
     return (
-      <section id="showreel" className="relative py-16">
+      <section id="showreel" ref={ref} className="relative py-16">
         <div className="container-x">
           <div className="label text-brand-300">Showreel · Live client work</div>
           <h2 className="display mt-3 text-5xl">
@@ -64,9 +68,9 @@ export default function Showreel() {
           </motion.div>
           <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1">
             <span className="label">Now playing</span>
-            <a href={url} target="_blank" rel="noopener noreferrer" className="font-serif text-xl italic text-white">
-              {reel[current]} ↗
-            </a>
+            <Link href={url} className="font-serif text-xl italic text-white">
+              {reel[current]} →
+            </Link>
           </div>
         </div>
       </section>
@@ -100,9 +104,9 @@ export default function Showreel() {
           </h2>
           <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
             <span className="label">Now playing</span>
-            <motion.a key={current} href={url} target="_blank" rel="noopener noreferrer" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="font-serif text-2xl italic text-white hover:text-brand-300">
-              {reel[current]} ↗
-            </motion.a>
+            <MotionLink key={current} href={url} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="font-serif text-2xl italic text-white hover:text-brand-300">
+              {reel[current]} →
+            </MotionLink>
           </div>
         </motion.div>
       </div>

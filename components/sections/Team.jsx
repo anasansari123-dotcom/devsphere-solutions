@@ -113,7 +113,8 @@ export default function Team() {
           </div>
           <Reveal delay={0.2}>
             <p className="text-lg text-slate-400">
-              A founder-led team — you work directly with the people who own the outcome, from the first call to long after launch.
+              A founder-led team of 20+ specialists with 10+ years of experience — you work directly with the people who own the
+              outcome, from the first call to long after launch.
             </p>
           </Reveal>
         </div>

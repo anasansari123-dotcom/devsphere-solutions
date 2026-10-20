@@ -19,7 +19,9 @@ export default function Preloader() {
   }, []);
 
   useEffect(() => {
-    if (done) document.documentElement.style.overflow = "";
+    if (!done) return;
+    document.documentElement.style.overflow = "";
+    window.__dsIntroDone = true;
   }, [done]);
 
   return (

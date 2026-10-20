@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
 import ProjectFrame from "@/components/ProjectFrame";
 import Reveal from "@/components/Reveal";
-import { projects } from "@/lib/content";
+import { projects, projectHref } from "@/lib/content";
 
 // Table of projects; hovering a row floats a scrolling preview that trails the cursor
 export default function ProjectIndex() {
@@ -25,8 +26,8 @@ export default function ProjectIndex() {
             Project <span className="accent">Index</span>
           </h2>
           <p className="max-w-sm text-slate-400">
-            Every build, at a glance. <span className="hidden md:inline">Hover a row to preview the live site.</span>
-            <span className="md:hidden">Tap a project to open the live site.</span>
+            Every build, at a glance. <span className="hidden md:inline">Hover a row to preview it, click to open the case study.</span>
+            <span className="md:hidden">Tap a project to open its case study.</span>
           </p>
         </Reveal>
 
@@ -41,11 +42,9 @@ export default function ProjectIndex() {
         <ul onMouseLeave={() => setActive(null)}>
           {projects.map((p, i) => (
             <li key={p.title} onMouseEnter={() => setActive(i)}>
-              <a
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor="Open"
+              <Link
+                href={projectHref(p)}
+                data-cursor="View"
                 className="group relative grid grid-cols-[50px_1fr_auto] items-center gap-4 border-b border-white/10 py-7 md:grid-cols-[80px_1.4fr_1fr_1.2fr_60px] md:gap-6"
               >
                 <span className="absolute inset-0 origin-bottom scale-y-0 bg-gradient-to-r from-brand-500/10 to-transparent transition-transform duration-500 group-hover:scale-y-100" />
@@ -56,7 +55,7 @@ export default function ProjectIndex() {
                 <span className="relative flex h-10 w-10 items-center justify-center justify-self-end rounded-full border border-white/15 text-white transition duration-500 group-hover:-rotate-45 group-hover:border-brand-400 group-hover:bg-brand-500">
                   →
                 </span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

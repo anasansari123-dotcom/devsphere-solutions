@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useInView, animate, useScroll, useTransform } from "framer-motion";
 import Reveal from "@/components/Reveal";
 import SplitReveal from "@/components/SplitReveal";
@@ -60,9 +61,9 @@ export default function About() {
           <SplitReveal text="Built for businesses that take *growth* seriously." className="display mt-6 text-[clamp(2.8rem,5.5vw,5.5rem)]" />
           <Reveal delay={0.2}>
             <p className="mt-8 max-w-lg text-lg leading-relaxed text-slate-400">
-              DevSphere Solutions is a premium full-stack agency building websites, SaaS platforms, mobile apps and admin
-              dashboards for clients across India, Dubai, Oman and global markets. Clean, production-ready code — designed for
-              long-term growth, built to move with your business.
+              DevSphere Solutions is a premium full-stack agency with 10+ years of experience and a 20+ member team, building
+              websites, SaaS platforms, mobile apps and admin dashboards for clients across India, Dubai, Oman and global
+              markets. Clean, production-ready code — designed for long-term growth, built to move with your business.
             </p>
             <div className="mt-8 flex flex-wrap gap-2">
               {serviceTags.map((t) => (
@@ -71,7 +72,7 @@ export default function About() {
             </div>
             <div className="mt-10">
               <Magnetic>
-                <a href="#process" className="btn-primary">Our Approach →</a>
+                <Link href="/services#process" className="btn-primary">Our Approach →</Link>
               </Magnetic>
             </div>
           </Reveal>
@@ -83,9 +84,9 @@ export default function About() {
         </div>
       </div>
 
-      <div className="container-x mt-16 lg:mt-28 grid grid-cols-2 gap-y-12 border-t border-white/10 pt-14 lg:grid-cols-4">
+      <div className="container-x mt-16 grid grid-cols-2 gap-x-6 gap-y-12 border-t border-white/10 pt-14 lg:mt-28 lg:grid-cols-3">
         {stats.map((s, i) => (
-          <Reveal key={s.label} delay={i * 0.1} className="lg:border-l lg:border-white/10 lg:pl-8 lg:first:border-0 lg:first:pl-0">
+          <Reveal key={s.label} delay={(i % 3) * 0.1} className="lg:border-l lg:border-white/10 lg:pl-8 lg:[&:nth-child(3n+1)]:border-0 lg:[&:nth-child(3n+1)]:pl-0">
             <div className="display text-6xl sm:text-7xl">
               <Counter value={s.value} suffix={s.suffix} />
             </div>
