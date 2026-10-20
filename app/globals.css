@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+::selection { background: #1e90ff; color: #fff; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #05070d; }
+::-webkit-scrollbar-thumb { background: linear-gradient(#1e90ff, #38bdf8); border-radius: 8px; }
+
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor, html.has-cursor * { cursor: none !important; }
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-12; }
+  .text-gradient { @apply bg-gradient-to-r from-brand-300 via-brand-400 to-brand-600 bg-clip-text text-transparent; }
+  .accent { @apply font-serif italic text-brand-400; }
+  .display { @apply font-serif font-normal leading-[0.95] tracking-[-0.02em] text-white; }
+  .glass { @apply border border-white/10 bg-white/[0.03] backdrop-blur-xl; }
+  .label { @apply text-[11px] font-medium uppercase tracking-[0.25em] text-slate-500; }
+  .btn-primary {
+    @apply relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-brand-500 px-7 py-3.5 font-medium text-white transition-colors duration-500 hover:bg-brand-400;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/15 px-7 py-3.5 font-medium text-white transition hover:border-brand-400 hover:bg-brand-500/10;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.3em] text-brand-300;
+  }
+  .grid-bg {
+    background-image: linear-gradient(rgba(56,189,248,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56,189,248,0.05) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .text-outline { -webkit-text-stroke: 1px rgba(148, 163, 184, 0.35); color: transparent; }
+
+  /* Full-page screenshot that scrolls inside its frame on hover */
+  .scroll-shot {
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: 50% 0%;
+    transition: background-position 7s cubic-bezier(0.45, 0, 0.25, 1);
+  }
+  .group:hover .scroll-shot, .scroll-shot.is-active { background-position: 50% 100%; }
+  @media (hover: none) {
+    .scroll-shot { animation: shot-scroll 14s ease-in-out infinite alternate; }
+  }
+}
+
+@keyframes shot-scroll {
+  0%, 10% { background-position: 50% 0%; }
+  90%, 100% { background-position: 50% 100%; }
+}
+
+/* Film-grain overlay */
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1.2s steps(6) infinite;
+}
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain, .scroll-shot { animation: none !important; transition: none !important; }
+}
