@@ -33,7 +33,7 @@ export default function Contact() {
       <div className="container-x relative">
         <div className="text-center">
           <div className="label">Start a project</div>
-          <SplitReveal text="Let's connect and grow *together.*" className="display mx-auto mt-6 max-w-6xl text-[clamp(3rem,8vw,8.5rem)]" />
+          <SplitReveal as="h1" text="Let's connect and grow *together.*" className="display mx-auto mt-6 max-w-6xl text-[clamp(3rem,8vw,8.5rem)]" />
           <Reveal delay={0.3}>
             <a href={`mailto:${company.email}`} className="group relative mt-8 inline-block text-xl text-slate-200 sm:text-2xl">
               {company.email}

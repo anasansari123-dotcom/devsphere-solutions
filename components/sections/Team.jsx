@@ -1,5 +1,6 @@
 "use client";
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import SplitReveal from "@/components/SplitReveal";
 import Reveal from "@/components/Reveal";
@@ -8,6 +9,28 @@ import SocialIcon from "@/components/SocialIcon";
 import { team } from "@/lib/content";
 
 const initials = (n) => n.split(" ").filter((w) => !/^(syed|mohd)$/i.test(w)).map((w) => w[0]).join("").slice(0, 2);
+
+// Full-bleed photo that fades into the card, with the role on a glass pill
+function Portrait({ m, right }) {
+  return (
+    <div className="relative aspect-[4/3] w-full overflow-hidden [mask-image:linear-gradient(to_bottom,black_55%,transparent)] lg:aspect-[16/11]">
+      <Image
+        src={m.photo}
+        alt={`${m.name}, ${m.role} of DevSphere Solutions`}
+        fill
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        className="object-cover transition-transform duration-[1.4s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+        style={{ objectPosition: m.focus }}
+      />
+      <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/40 to-transparent" />
+      {/* On phones the photo is too short for an overlay, so the badge moves above the name instead */}
+      <span className={`label absolute top-4 lg:top-6 ${right ? "right-4 lg:right-6" : "left-4 lg:left-6"} hidden items-center sm:flex gap-2 rounded-full border border-white/15 bg-black/40 px-3 py-1.5 !tracking-[0.18em] text-white backdrop-blur-md lg:px-4 lg:py-2`}>
+        <span className="h-1.5 w-1.5 rounded-full bg-brand-400 shadow-[0_0_10px_#38bdf8]" />
+        {m.role}
+      </span>
+    </div>
+  );
+}
 
 function FounderCard({ m, i }) {
   const ref = useRef(null);
@@ -34,16 +57,18 @@ function FounderCard({ m, i }) {
           y.set(0);
         }}
         style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}
-        className="group relative h-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-gradient-to-br from-[#0d1528] to-[#070b16] p-5 sm:p-8 lg:rounded-[2rem] lg:p-10"
+        className="group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-white/10 bg-gradient-to-br from-[#0d1528] to-[#070b16] transition-colors duration-500 hover:border-brand-400/30 lg:rounded-[2rem]"
       >
+        {m.photo && <Portrait m={m} right={i % 2 === 1} />}
+
         <div
-          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          className="pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           style={{ background: "radial-gradient(500px circle at var(--mx) var(--my), rgba(56,189,248,0.14), transparent 60%)" }}
         />
 
         {/* Depth lift only on desktop; preserve-3d layers can mis-clip on mobile browsers */}
-        <div className="relative lg:[transform:translateZ(40px)]">
-          <div className="flex items-center justify-between gap-4 lg:items-start lg:gap-6">
+        <div className={`relative z-10 p-5 sm:p-8 lg:p-10 lg:[transform:translateZ(40px)] ${m.photo ? "-mt-10 pt-0 sm:pt-0 lg:-mt-14 lg:pt-0" : ""}`}>
+          <div className={`flex items-center justify-between gap-4 lg:items-start lg:gap-6 ${m.photo ? "hidden" : ""}`}>
             {/* Monogram with an orbiting ring, echoing the globe in the logo */}
             <div className="relative h-16 w-16 shrink-0 lg:h-28 lg:w-28">
               <motion.div
@@ -60,39 +85,50 @@ function FounderCard({ m, i }) {
             </span>
           </div>
 
-          <h3 className="display mt-5 text-[2.5rem] sm:text-5xl lg:mt-8 lg:text-6xl">
+          {m.photo && (
+            <span className="label mb-3 inline-flex items-center gap-2 rounded-full border border-brand-400/30 bg-ink/70 px-3 py-1.5 !tracking-[0.18em] text-brand-300 backdrop-blur-md sm:hidden">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-400 shadow-[0_0_10px_#38bdf8]" />
+              {m.role}
+            </span>
+          )}
+          <h3 className={`display text-[2.5rem] sm:text-5xl lg:text-6xl ${m.photo ? "" : "mt-5 lg:mt-8"}`}>
             {m.name.split(" ").slice(0, -1).join(" ")} <span className="accent">{m.name.split(" ").slice(-1)}</span>
           </h3>
           <p className="mt-4 text-[15px] leading-relaxed text-slate-400 lg:mt-6 lg:text-lg">{m.bio}</p>
 
-          {/* Mobile: three equal buttons in one row. Desktop: pill row with the full number */}
-          <div className="mt-6 grid grid-cols-3 gap-2 border-t border-white/10 pt-5 lg:mt-8 lg:flex lg:flex-wrap lg:items-center lg:gap-3 lg:pt-8">
-            <Magnetic className="w-full lg:w-auto">
-              <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="btn-primary w-full justify-center !gap-1.5 !px-2 !py-3 text-xs lg:w-auto lg:!gap-2 lg:!px-5 lg:!py-2.5 lg:text-sm">
+          {/* Mobile: full-width Call with the number, then WhatsApp | LinkedIn. Desktop: one pill row */}
+          <div className="mt-6 grid grid-cols-2 gap-2.5 border-t border-white/10 pt-5 lg:mt-8 lg:flex lg:flex-wrap lg:items-center lg:gap-3 lg:pt-8">
+            <Magnetic className="order-3 w-full lg:order-none lg:w-auto">
+              <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="btn-ghost w-full justify-center !gap-2 !px-3 !py-3.5 text-sm lg:hidden">
+                <SocialIcon name="LinkedIn" size={16} />
+                LinkedIn
+              </a>
+              <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="btn-primary hidden !gap-2 !px-5 !py-2.5 text-sm lg:inline-flex">
                 <SocialIcon name="LinkedIn" size={15} />
                 LinkedIn
               </a>
             </Magnetic>
-            <Magnetic className="w-full lg:w-auto">
-              <a href={m.phone.href} aria-label={`Call ${m.phone.label}`} className="btn-ghost w-full justify-center !gap-1.5 !px-2 !py-3 text-xs lg:w-auto lg:!px-5 lg:!py-2.5 lg:text-sm">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden className="lg:hidden">
+            <Magnetic className="order-1 col-span-2 w-full lg:order-none lg:w-auto">
+              <a href={m.phone.href} aria-label={`Call ${m.phone.label}`} className="btn-primary w-full justify-center !gap-2 !px-4 !py-3.5 text-sm lg:hidden">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.4 1.8.7 2.7a2 2 0 01-.5 2.1L8 9.8a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.7.7a2 2 0 011.7 2z" />
                 </svg>
-                <span className="lg:hidden">Call</span>
-                <span className="hidden lg:inline">{m.phone.label}</span>
+                Call {m.phone.label}
+              </a>
+              <a href={m.phone.href} aria-label={`Call ${m.phone.label}`} className="btn-ghost hidden !px-5 !py-2.5 text-sm lg:inline-flex">
+                {m.phone.label}
               </a>
             </Magnetic>
-            <Magnetic className="w-full lg:w-auto">
-              <a href={m.whatsapp} target="_blank" rel="noopener noreferrer" className="btn-ghost w-full justify-center !gap-1.5 !px-2 !py-3 text-xs lg:w-auto lg:!px-5 lg:!py-2.5 lg:text-sm">
-                <span className="lg:hidden">
-                  <SocialIcon name="WhatsApp" size={15} />
+            <Magnetic className="order-2 w-full lg:order-none lg:w-auto">
+              <a href={m.whatsapp} target="_blank" rel="noopener noreferrer" className="btn-ghost w-full justify-center !gap-2 !px-3 !py-3.5 text-sm lg:w-auto lg:!px-5 lg:!py-2.5">
+                <span className="text-[#25D366] lg:hidden">
+                  <SocialIcon name="WhatsApp" size={16} />
                 </span>
                 <span className="lg:hidden">WhatsApp</span>
                 <span className="hidden lg:inline">WhatsApp ↗</span>
               </a>
             </Magnetic>
           </div>
-          <a href={m.phone.href} className="mt-3 block text-center text-sm text-slate-400 lg:hidden">{m.phone.label}</a>
         </div>
       </motion.article>
     </Reveal>

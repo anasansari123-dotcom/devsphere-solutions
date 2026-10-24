@@ -18,7 +18,7 @@ export default function ScrollRing() {
           exit={{ opacity: 0, scale: 0.4, rotate: 90 }}
           transition={{ type: "spring", stiffness: 260, damping: 20 }}
           whileTap={{ scale: 0.85 }}
-          onClick={() => (window.__lenis ? window.__lenis.scrollTo(0, { duration: 1.4 }) : window.scrollTo({ top: 0, behavior: "smooth" }))}
+          onClick={() => (window.__lenis ? window.__lenis.scrollTo(0, { duration: 1.8 }) : window.scrollTo({ top: 0, behavior: "smooth" }))}
           aria-label="Back to top"
           className="fixed bottom-5 right-5 z-[45] flex h-14 w-14 items-center justify-center rounded-full bg-ink/80 text-white shadow-[0_10px_30px_-10px_rgba(30,144,255,0.8)] backdrop-blur lg:hidden"
         >

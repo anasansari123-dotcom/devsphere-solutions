@@ -8,7 +8,8 @@ export default function SmoothScroll({ children }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+    // Lower lerp + wheel multiplier = slower, softer glide (default felt too fast)
+    const lenis = new Lenis({ lerp: 0.07, wheelMultiplier: 0.7, touchMultiplier: 1, smoothWheel: true });
     lenisRef.current = lenis;
     window.__lenis = lenis; // shared with controls like the mobile back-to-top ring
     let id;

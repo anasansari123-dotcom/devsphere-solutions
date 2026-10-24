@@ -12,7 +12,8 @@ const useIso = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 function Card({ p, i }) {
   return (
-    <article className="group relative w-full shrink-0 lg:w-[min(62vw,860px,calc((100vh-370px)*1.6))]">
+    // Desktop width is derived from viewport height so frame + text always fit above the progress bar
+    <article className="group relative w-full shrink-0 lg:w-[min(62vw,860px,calc((100vh-430px)*1.6))]">
       <Link href={projectHref(p)} data-cursor="View" className="block">
         <motion.div whileHover={{ y: -8 }} transition={{ type: "spring", stiffness: 200, damping: 20 }}>
           <ProjectFrame project={p} />
@@ -21,19 +22,20 @@ function Card({ p, i }) {
       <div className="mt-6 grid gap-4 sm:grid-cols-[auto_1fr_auto] sm:items-start sm:gap-6">
         <span className="font-serif text-2xl italic text-brand-400">{String(i + 1).padStart(2, "0")}</span>
         <div>
-          <h3 className="display text-4xl sm:text-5xl">
+          <h3 className="display text-4xl sm:text-5xl lg:line-clamp-1 lg:text-[clamp(2rem,3.2vw,3rem)]">
             <Link href={projectHref(p)} className="transition-colors hover:text-brand-300">{p.title}</Link>
           </h3>
-          <div className="label mt-2">
+          <div className="label mt-2 lg:line-clamp-1">
             {p.category} · {p.location}
           </div>
-          <p className="mt-4 max-w-xl text-slate-400">{p.text}</p>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <p className="mt-4 max-w-xl text-slate-400 lg:mt-3 lg:line-clamp-3">{p.text}</p>
+          {/* Desktop: single row of tags, overflow rows hidden */}
+          <div className="mt-4 flex flex-wrap gap-2 lg:mt-3 lg:h-[26px] lg:overflow-hidden">
             {p.tech.map((t) => (
               <span key={t} className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">{t}</span>
             ))}
           </div>
-          <div className="mt-5 flex flex-wrap gap-5 text-sm font-semibold">
+          <div className="mt-5 flex flex-wrap gap-5 text-sm font-semibold lg:mt-4">
             <Link href={projectHref(p)} className="text-brand-300 hover:text-brand-400">Case study →</Link>
             <a href={p.url} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white">Live site ↗</a>
           </div>
@@ -78,7 +80,7 @@ export default function Work({ showIntro = true }) {
   }, [desktop]);
 
   const { scrollYProgress } = useScroll({ target: section, offset: ["start start", "end end"] });
-  const x = useSpring(useTransform(scrollYProgress, [0, 1], [0, -distance]), { stiffness: 120, damping: 30, mass: 0.3 });
+  const x = useSpring(useTransform(scrollYProgress, [0, 1], [0, -distance]), { stiffness: 80, damping: 28, mass: 0.4 });
   const bar = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   const intro = (

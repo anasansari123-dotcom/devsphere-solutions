@@ -3,7 +3,8 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SplitReveal from "@/components/SplitReveal";
 import Reveal from "@/components/Reveal";
-import { services } from "@/lib/content";
+import Link from "next/link";
+import { services, projects, projectHref } from "@/lib/content";
 
 function Card({ s, i, total, progress }) {
   // Earlier cards shrink and dim as later ones stack over them
@@ -16,7 +17,7 @@ function Card({ s, i, total, progress }) {
         style={{ scale, filter }}
         className="group relative grid w-full origin-top overflow-hidden rounded-[1.5rem] border border-white/10 bg-gradient-to-br from-[#0d1528] to-[#070b16] lg:h-full lg:max-h-[620px] lg:grid-cols-[1.05fr_1fr] lg:rounded-[2rem]"
       >
-        <div className="relative flex flex-col justify-between gap-6 p-6 sm:p-12">
+        <div className="relative flex flex-col justify-between gap-6 p-6 sm:p-12 [@media(min-width:1024px)_and_(max-height:800px)]:p-9">
           <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-brand-500/15 blur-3xl" />
           <div className="relative flex items-center justify-between">
             <span className="label text-brand-300">
@@ -27,7 +28,7 @@ function Card({ s, i, total, progress }) {
             </span>
           </div>
           <div className="relative">
-            <h3 className="display text-4xl sm:text-6xl xl:text-7xl">
+            <h3 className="display text-4xl sm:text-6xl xl:text-7xl [@media(min-width:1024px)_and_(max-height:800px)]:text-6xl">
               {s.title.split(" ").slice(0, -1).join(" ")} <span className="accent">{s.title.split(" ").slice(-1)}</span>
             </h3>
             <p className="mt-4 max-w-md text-base text-slate-400 sm:mt-5 sm:text-lg">{s.text}</p>
@@ -36,6 +37,21 @@ function Card({ s, i, total, progress }) {
                 <span key={t} className="rounded-full border border-brand-400/20 bg-brand-500/10 px-4 py-1.5 text-sm text-brand-300">{t}</span>
               ))}
             </div>
+            {s.projects && (
+              <div className="mt-6 border-t border-white/10 pt-4 [@media(min-width:1024px)_and_(max-height:800px)]:mt-5 [@media(min-width:1024px)_and_(max-height:800px)]:pt-3">
+                <div className="label mb-2">Projects delivered</div>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                  {s.projects.map((t) => {
+                    const p = projects.find((x) => x.title === t);
+                    return p ? (
+                      <Link key={t} href={projectHref(p)} data-cursor="View" className="text-slate-300 transition-colors hover:text-brand-300">
+                        {t} <span className="text-brand-400">↗</span>
+                      </Link>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className="relative order-first h-40 overflow-hidden sm:h-56 lg:order-none lg:h-auto" data-cursor="Scroll">

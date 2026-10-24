@@ -9,24 +9,58 @@ import TouchRipple from "@/components/mobile/TouchRipple";
 import ScrollRing from "@/components/mobile/ScrollRing";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
+import { siteUrl, keywords, geo, organizationJsonLd } from "@/lib/seo";
 
 const sans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-sans" });
 const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-serif" });
 
+const description =
+  "DevSphere Solutions (DevSphere MZN) is a leading IT company in Muzaffarnagar, Uttar Pradesh — building websites, SaaS platforms, mobile apps, CRMs and admin dashboards for India, Dubai, Oman & global clients.";
+
 export const metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "DevSphere Solutions | Websites, SaaS, Mobile Apps & Admin Dashboards",
+    default: "DevSphere Solutions | IT Company in Muzaffarnagar — Website & App Development",
     template: "%s | DevSphere Solutions",
   },
-  description:
-    "DevSphere Solutions is a premium software development agency building scalable websites, SaaS platforms, mobile apps, admin dashboards and AI integrations for India, Dubai, Oman & global markets.",
-  icons: { icon: "/logo.jpeg" },
+  description,
+  keywords,
+  applicationName: "DevSphere Solutions",
+  authors: [{ name: "DevSphere Solutions", url: siteUrl }],
+  creator: "DevSphere Solutions",
+  publisher: "DevSphere Solutions",
+  category: "technology",
+  alternates: { canonical: "/" },
+  icons: { icon: "/logo.jpeg", apple: "/logo.jpeg" },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: "DevSphere Solutions",
+    url: "/",
+    title: "DevSphere Solutions | IT Company in Muzaffarnagar",
+    description,
+  },
+  twitter: { card: "summary_large_image", title: "DevSphere Solutions | IT Company in Muzaffarnagar", description },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
+  verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION },
+  // Local-search signals
+  other: {
+    "geo.region": geo.regionCode,
+    "geo.placename": `${geo.city}, ${geo.region}`,
+    "geo.position": `${geo.lat};${geo.lng}`,
+    ICBM: `${geo.lat}, ${geo.lng}`,
+  },
 };
+
+export const viewport = { themeColor: "#070b16" };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${sans.variable} ${serif.variable}`}>
-      <body className="bg-ink font-sans text-slate-200 antialiased">
+    // suppressHydrationWarning: browser extensions (e.g. QuillBot, Grammarly) inject attributes on <html>/<body> before React hydrates
+    <html lang="en-IN" className={`${sans.variable} ${serif.variable}`} suppressHydrationWarning>
+      <body className="bg-ink font-sans text-slate-200 antialiased" suppressHydrationWarning>
+        <JsonLd data={organizationJsonLd()} />
         <Preloader />
         <ScrollProgress />
         <Cursor />

@@ -3,15 +3,20 @@ import Work from "@/components/sections/Work";
 import ProjectIndex from "@/components/sections/ProjectIndex";
 import CTA from "@/components/CTA";
 import { projects } from "@/lib/content";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbJsonLd, pageMeta } from "@/lib/seo";
 
-export const metadata = {
-  title: "Work",
-  description: "Selected projects by DevSphere Solutions — CRMs, e-commerce, EdTech, booking platforms and brand websites for clients in India and the UAE.",
-};
+export const metadata = pageMeta({
+  title: "Our Work — Projects by DevSphere Solutions, Muzaffarnagar",
+  description:
+    "Websites, e-commerce stores, CRMs, EdTech and booking platforms built by DevSphere Solutions, Muzaffarnagar for clients in India, Dubai and the UAE.",
+  path: "/work",
+});
 
 export default function WorkPage() {
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([["Work", "/work"]])} />
       <PageHero
         crumbs={[["Work"]]}
         eyebrow={`${projects.length} projects · India · UAE`}

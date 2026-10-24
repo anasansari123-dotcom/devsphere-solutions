@@ -75,6 +75,33 @@ function ScrollThrough({ p }) {
   );
 }
 
+// Client background + numbered list of what was delivered
+function Built({ p }) {
+  return (
+    <section className="container-x pt-16 lg:pt-24">
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+        <Reveal>
+          <div className="label">The client</div>
+          <h2 className="display mt-4 text-4xl sm:text-6xl">
+            What we <span className="accent">built</span>
+          </h2>
+          {p.client && <p className="mt-6 max-w-md text-lg text-slate-400">{p.client}</p>}
+        </Reveal>
+        <ol className="grid gap-x-10 sm:grid-cols-2">
+          {p.highlights.map((h, i) => (
+            <Reveal key={h} delay={(i % 2) * 0.08}>
+              <li className="flex gap-4 border-t border-white/10 py-5">
+                <span className="font-serif text-lg italic text-brand-400">{String(i + 1).padStart(2, "0")}</span>
+                <span className="text-slate-200">{h}</span>
+              </li>
+            </Reveal>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
 export default function ProjectDetail({ index }) {
   const p = projects[index];
   const next = projects[(index + 1) % projects.length];
@@ -126,6 +153,8 @@ export default function ProjectDetail({ index }) {
           )}
         </div>
       </section>
+
+      {p.highlights && <Built p={p} />}
 
       <Preview p={p} />
       {p.full && <ScrollThrough p={p} />}

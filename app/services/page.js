@@ -4,15 +4,20 @@ import Services from "@/components/sections/Services";
 import Technologies from "@/components/sections/Technologies";
 import Process from "@/components/sections/Process";
 import CTA from "@/components/CTA";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbJsonLd, pageMeta } from "@/lib/seo";
 
-export const metadata = {
-  title: "Services",
-  description: "Website development, full-stack web apps, SaaS, e-commerce, mobile apps and admin dashboards — plus our technology stack and delivery process.",
-};
+export const metadata = pageMeta({
+  title: "Website & App Development Services in Muzaffarnagar",
+  description:
+    "Website development, full-stack web apps, SaaS, e-commerce, Android & iOS apps, CRMs and admin dashboards by DevSphere Solutions — IT company in Muzaffarnagar serving India, Dubai & Oman.",
+  path: "/services",
+});
 
 export default function ServicesPage() {
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([["Services", "/services"]])} />
       <PageHero
         crumbs={[["Services"]]}
         eyebrow="What we do"

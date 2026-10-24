@@ -14,6 +14,7 @@ const cols = [
     [
       ["Home", "/"],
       ["About", "/about"],
+      ["IT Company in Muzaffarnagar", "/it-company-in-muzaffarnagar"],
       ["Founders", "/about#team"],
       ["Work", "/work"],
       ["Services", "/services"],

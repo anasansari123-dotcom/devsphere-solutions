@@ -11,9 +11,9 @@ const wrap = (min, max, v) => {
 export default function VelocityMarquee({ children, baseVelocity = 2, className = "" }) {
   const base = useMotionValue(0);
   const { scrollY } = useScroll();
-  const smooth = useSpring(useVelocity(scrollY), { damping: 50, stiffness: 400 });
-  const factor = useTransform(smooth, [-1000, 0, 1000], [-4, 0, 4], { clamp: false });
-  const skewX = useTransform(smooth, [-2000, 2000], [8, -8]);
+  const smooth = useSpring(useVelocity(scrollY), { damping: 60, stiffness: 200 });
+  const factor = useTransform(smooth, [-1000, 0, 1000], [-2, 0, 2], { clamp: false });
+  const skewX = useTransform(smooth, [-2000, 2000], [4, -4]);
   const x = useTransform(base, (v) => `${wrap(-25, -50, v)}%`);
   const dir = useRef(1);
 
