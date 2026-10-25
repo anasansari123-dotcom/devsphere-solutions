@@ -37,7 +37,7 @@ export default function Hero() {
       <motion.div style={{ y, opacity }} className="container-x relative z-10">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: START }} className="eyebrow">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand-400" />
-          IT Company in Muzaffarnagar · Premium Software Agency
+          IT Company in Uttar Pradesh · Premium Software Agency
         </motion.div>
 
         <SplitReveal
@@ -57,7 +57,7 @@ export default function Hero() {
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: START + 1 }} className="mt-8 max-w-xl">
           <p className="text-lg leading-relaxed text-slate-300">
-            DevSphere Solutions is a Muzaffarnagar-based IT company delivering full-stack development, SaaS platforms, mobile apps, admin
+            DevSphere Solutions is a Uttar Pradesh-based IT company delivering full-stack development, SaaS platforms, mobile apps, admin
             dashboards, AI integrations and cloud deployment for{" "}
             <span className="accent text-xl">India, Dubai, Oman</span> &amp; global markets.
           </p>

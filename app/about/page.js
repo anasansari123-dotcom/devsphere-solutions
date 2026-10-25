@@ -8,9 +8,9 @@ import JsonLd from "@/components/JsonLd";
 import { breadcrumbJsonLd, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "About DevSphere Solutions — IT Company in Muzaffarnagar",
+  title: "About DevSphere Solutions — IT Company in Uttar Pradesh",
   description:
-    "Meet DevSphere Solutions (DevSphere MZN) — a founder-led IT company from Muzaffarnagar, Uttar Pradesh with 10+ years of experience and 20+ experts building digital products for India, Dubai, Oman and global clients.",
+    "Meet DevSphere Solutions — a founder-led IT company from Uttar Pradesh with 10+ years of experience and 20+ experts building digital products for India, Dubai, Oman and global clients.",
   path: "/about",
 });
 

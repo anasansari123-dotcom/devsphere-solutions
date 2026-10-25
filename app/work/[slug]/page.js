@@ -15,7 +15,7 @@ export async function generateMetadata({ params }) {
   if (!p) return {};
   return pageMeta({
     title: `${p.title} — ${p.category} Case Study`,
-    description: `${p.text} Built by DevSphere Solutions, Muzaffarnagar.`,
+    description: `${p.text} Built by DevSphere Solutions, Uttar Pradesh.`,
     path: projectHref(p),
     ...(p.image && { images: [p.image] }),
   });

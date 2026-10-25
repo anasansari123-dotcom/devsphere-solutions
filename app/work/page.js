@@ -7,9 +7,9 @@ import JsonLd from "@/components/JsonLd";
 import { breadcrumbJsonLd, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Our Work — Projects by DevSphere Solutions, Muzaffarnagar",
+  title: "Our Work — Projects by DevSphere Solutions, Uttar Pradesh",
   description:
-    "Websites, e-commerce stores, CRMs, EdTech and booking platforms built by DevSphere Solutions, Muzaffarnagar for clients in India, Dubai and the UAE.",
+    "Websites, e-commerce stores, CRMs, EdTech and booking platforms built by DevSphere Solutions, Uttar Pradesh for clients in India, Dubai and the UAE.",
   path: "/work",
 });
 

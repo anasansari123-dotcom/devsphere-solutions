@@ -3,9 +3,9 @@ import JsonLd from "@/components/JsonLd";
 import { breadcrumbJsonLd, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Contact DevSphere Solutions — IT Company in Muzaffarnagar",
+  title: "Contact DevSphere Solutions — IT Company in Uttar Pradesh",
   description:
-    "Start your project with DevSphere Solutions, Muzaffarnagar. Call +91 94578 18861, WhatsApp or email us for a free quote on websites, apps and software — reply within 1–2 business days.",
+    "Start your project with DevSphere Solutions, Uttar Pradesh. Call +91 94578 18861, WhatsApp or email us for a free quote on websites, apps and software — reply within 1–2 business days.",
   path: "/contact",
 });
 

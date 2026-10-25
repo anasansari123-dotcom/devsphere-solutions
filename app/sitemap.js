@@ -5,7 +5,6 @@ export default function sitemap() {
   const now = new Date();
   const pages = [
     ["/", 1, "weekly"],
-    ["/it-company-in-muzaffarnagar", 0.9, "monthly"],
     ["/services", 0.9, "monthly"],
     ["/work", 0.8, "weekly"],
     ["/about", 0.8, "monthly"],

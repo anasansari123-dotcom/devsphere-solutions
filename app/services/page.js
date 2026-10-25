@@ -8,9 +8,9 @@ import JsonLd from "@/components/JsonLd";
 import { breadcrumbJsonLd, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Website & App Development Services in Muzaffarnagar",
+  title: "Website & App Development Services in Uttar Pradesh",
   description:
-    "Website development, full-stack web apps, SaaS, e-commerce, Android & iOS apps, CRMs and admin dashboards by DevSphere Solutions — IT company in Muzaffarnagar serving India, Dubai & Oman.",
+    "Website development, full-stack web apps, SaaS, e-commerce, Android & iOS apps, CRMs and admin dashboards by DevSphere Solutions — IT company in Uttar Pradesh serving India, Dubai & Oman.",
   path: "/services",
 });
 

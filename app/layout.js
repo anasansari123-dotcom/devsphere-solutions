@@ -16,12 +16,12 @@ const sans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-sans" });
 const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-serif" });
 
 const description =
-  "DevSphere Solutions (DevSphere MZN) is a leading IT company in Muzaffarnagar, Uttar Pradesh — building websites, SaaS platforms, mobile apps, CRMs and admin dashboards for India, Dubai, Oman & global clients.";
+  "DevSphere Solutions is a leading IT company in Uttar Pradesh — building websites, SaaS platforms, mobile apps, CRMs and admin dashboards for India, Dubai, Oman & global clients.";
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "DevSphere Solutions | IT Company in Muzaffarnagar — Website & App Development",
+    default: "DevSphere Solutions | IT Company in Uttar Pradesh — Website & App Development",
     template: "%s | DevSphere Solutions",
   },
   description,
@@ -38,18 +38,16 @@ export const metadata = {
     locale: "en_IN",
     siteName: "DevSphere Solutions",
     url: "/",
-    title: "DevSphere Solutions | IT Company in Muzaffarnagar",
+    title: "DevSphere Solutions | IT Company in Uttar Pradesh",
     description,
   },
-  twitter: { card: "summary_large_image", title: "DevSphere Solutions | IT Company in Muzaffarnagar", description },
+  twitter: { card: "summary_large_image", title: "DevSphere Solutions | IT Company in Uttar Pradesh", description },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
   verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION },
   // Local-search signals
   other: {
     "geo.region": geo.regionCode,
-    "geo.placename": `${geo.city}, ${geo.region}`,
-    "geo.position": `${geo.lat};${geo.lng}`,
-    ICBM: `${geo.lat}, ${geo.lng}`,
+    "geo.placename": `${geo.region}, India`,
   },
 };
 
